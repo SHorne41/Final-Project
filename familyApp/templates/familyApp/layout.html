@@ -1,0 +1,27 @@
+{% load static %}
+
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="{% static 'familyApp/style.css' %}" rel="stylesheet">
+</head>
+<html>
+    <body>
+        <div class="container-fluid vh-100">
+            <div class="row vh-100">
+                <div class="col-2 panel" id="nav-bar">
+                    <p>This is where all the navigation menu stuff is going. There will be 5 links, including:
+                    Profile, Calendar, Chores, Chat, and Sync</p>
+                </div>
+                <div class="col-8" id="page-content">
+                    {% block body %}
+                    {% endblock %}
+                </div>
+                <div class="col-2 panel" id="sidebar">
+                    {% block sidebar %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
