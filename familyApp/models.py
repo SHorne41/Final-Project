@@ -3,7 +3,13 @@ from django.db import models
 import datetime
 
 class CustomUser(AbstractUser):
-    pass
+    first_name = models.CharField(max_length=20)
+    last_name = models.CharField(max_length=30)
+    role = models.CharField(max_length=15, blank=True)
+    group = models.CharField(max_length=50, blank=True)
+    calendarEmail = models.EmailField(blank=True)
+    profile_pic = models.ImageField(blank=True)
+
 
 class CalendarEvent(models.Model):
     name = models.CharField(max_length=100)
