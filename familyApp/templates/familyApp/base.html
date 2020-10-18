@@ -8,11 +8,22 @@
 <html>
     <body>
         <div class="container-fluid vh-100">
-            <div class="row vh-100">
-                <div class="col-12 page-content">
-                {% block body %}
-                {% endblock %}
+            <div class="row h-25 page-content">
+
+            </div>
+            <div class="row h-50">
+                <div class="col-4 page-content">
+
                 </div>
+                <div class="col-4 page-content">
+                    {% block body %}
+                    {% endblock %}
+                </div>
+                <div class="col-4 page-content">
+
+                </div>
+            </div>
+            <div class="row h-25 page-content">
             </div>
         </div>
     </body>
