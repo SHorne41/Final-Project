@@ -21,7 +21,9 @@ def loginView(request):
                 "message": "Invalid email and/or password."
             })
     else:
-        return render(request, "familyApp/login.html")
+        newCustomUserForm = CustomUserCreationForm()
+        context = {'form': newCustomUserForm}
+        return render(request, "familyApp/login.html", context)
 
 def registerView(request):
     return render(request, "familyApp/register.html")

@@ -21,7 +21,6 @@
 <!-- Button trigger modal -->
 <p>Don't have an account? <button type="button" style="padding-bottom: 10px;" class="btn btn-link" data-toggle="modal" data-target="#registerModal">Register here.</button></p>
 
-
 <!-- Modal -->
 <div class="modal fade"  id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -33,10 +32,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Content goes here</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Register</button>
+                <form action="#">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <p>Fields labeled with a * are required</p>
+                <button type="submit" class="btn btn-primary">Register</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>
