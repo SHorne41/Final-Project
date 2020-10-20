@@ -25,8 +25,17 @@ def loginView(request):
         context = {'form': newCustomUserForm}
         return render(request, "familyApp/login.html", context)
 
-def registerView(request):
-    return render(request, "familyApp/register.html")
+def registerUser(request):
+    if request.method == 'POST':
+        newCustomUserForm = CustomUserCreationForm(request.POST)
+        if newCustomUserForm.is_valid():
+            newUser = newCustomUserForm.save()
+        else:
+            print("User not created")
+            print(newCustomUserForm.errors)
+
+    return HttpResponseRedirect(reverse("index"))
+
 
 def calendarView(request):
     return render(request, "familyApp/calendar.html")

@@ -11,13 +11,12 @@ class CustomUserCreationForm(UserCreationForm):
             'calendarEmail': 'API link to your Google calendar'
         }
         labels = {
-            'email':            '*Email Address  ',
-            'first_name':       '*First Name     ',
-            'last_name':        '*Last Name      ',
-            'role':             'Role            ',
-            'group':            'Group           ',
-            'calendarEmail':    'Google Calendar '
-
+            'email': '*Email Address  ',
+            'first_name': '*First Name     ',
+            'last_name': '*Last Name      ',
+            'role': 'Role            ',
+            'group': 'Group           ',
+            'calendarEmail': 'Google Calendar '
         }
 
 class CustomUserChangeForm(UserChangeForm):

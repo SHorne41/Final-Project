@@ -11,7 +11,7 @@ class CustomUser(AbstractUser):
     calendarEmail = models.EmailField(blank=True)
     profile_pic = models.ImageField(blank=True)
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name']
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
 
 class CalendarEvent(models.Model):

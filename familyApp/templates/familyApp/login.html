@@ -32,7 +32,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#">
+                <form action="{% url 'register' %}" method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <p>Fields labeled with a * are required</p>
