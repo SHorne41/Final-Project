@@ -1,0 +1,46 @@
+{% extends "familyApp/base.html" %}
+
+{% block body %}
+<h1 style="text-align: center;">Log In </h1>
+
+{% if message %}
+    <div>{{ message }}</div>
+{% endif %}
+
+<form action="{% url 'index' %}" method='post'>
+    {% csrf_token %}
+    <div class="form-group">
+        <input autofocus class="form-control" type="email" name="email" placeholder="Email">
+    </div>
+    <div class="form-group">
+        <input class="form-control" type="password" name="password" placeholder="Password">
+    </div>
+    <input class="btn btn-primary" type="submit" value="Login">
+</form>
+
+<!-- Button trigger modal -->
+<p>Don't have an account? <button type="button" style="padding-bottom: 10px;" class="btn btn-link" data-toggle="modal" data-target="#registerModal">Register here.</button></p>
+
+<!-- Modal -->
+<div class="modal fade"  id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModalLabel">Register</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'register' %}" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <p>Fields labeled with a * are required</p>
+                <button type="submit" class="btn btn-primary">Register</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
