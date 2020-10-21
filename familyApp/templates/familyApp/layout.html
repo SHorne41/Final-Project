@@ -13,8 +13,21 @@
         <div class="container-fluid vh-100">
             <div class="row vh-100">
                 <div class="col-2 panel nav-bar">
-                    <p>This is where all the navigation menu stuff is going. There will be 5 links, including:
-                    Profile, Calendar, Chores, Chat, and Sync</p>
+                    <div class="navigation">
+                        <a class="nav-link" style="background-image: url(static/familyApp/images/profile.png);" href="#">Profile</a>
+                    </div>
+                    <div class="navigation">
+                        <a class="nav-link" style="background-image: url(static/familyApp/images/calendar.png);" href="{% url 'calendar' %}">Calendar</a>
+                    </div>
+                    <div class="navigation">
+                        <a class="nav-link" style="background-image: url(static/familyApp/images/checklist.jpg);" href="#">Checklist</a>
+                    </div>
+                    <div class="navigation">
+                        <a class="nav-link" style="background-image: url(static/familyApp/images/message.jpg);" href="#">Message</a>
+                    </div>
+                    <div class="navigation">
+                        <a class="nav-link" style="background-image: url(static/familyApp/images/sync.jpg);" href="#">Sync</a>
+                    </div>
                 </div>
                 <div class="col-8 page-content">
                     {% block body %}
