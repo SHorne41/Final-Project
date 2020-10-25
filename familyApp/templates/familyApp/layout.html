@@ -7,26 +7,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link href="{% static 'familyApp/style.css' %}" rel="stylesheet">
+    <script src="static/familyApp/script.js"></script>
 </head>
 <html>
     <body>
         <div class="container-fluid vh-100">
             <div class="row vh-100">
                 <div class="col-2 panel nav-bar">
-                    <div class="navigation" id="profile_view">
-                        <a class="nav-link" style="background-image: url(static/familyApp/images/profile.png);" href="#">Profile</a>
+                    <div class="navigation" id="profile_tab">
                     </div>
                     <div class="navigation" id="calendar_view">
-                        <a class="nav-link" style="background-image: url(static/familyApp/images/calendar.png);" href="{% url 'calendar' %}">Calendar</a>
                     </div>
                     <div class="navigation" id="chores_view">
-                        <a class="nav-link" style="background-image: url(static/familyApp/images/checklist.jpg);" href="#">Checklist</a>
                     </div>
                     <div class="navigation" id="chat_view">
-                        <a class="nav-link" style="background-image: url(static/familyApp/images/message.jpg);" href="#">Message</a>
                     </div>
                     <div class="navigation" id="sync_feature">
-                        <a class="nav-link" style="background-image: url(static/familyApp/images/sync.jpg);" href="#">Sync</a>
                     </div>
                 </div>
                 <div class="col-8 page-content">
@@ -39,7 +35,5 @@
                 </div>
             </div>
         </div>
-        {% block script %}
-        {% endblock %}
     </body>
 </html>
