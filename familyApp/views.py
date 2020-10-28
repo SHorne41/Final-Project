@@ -1,7 +1,8 @@
 from django.shortcuts import render,  HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, MessageForm
+from datetime import datetime
 
 # Create your views here.
 
@@ -39,3 +40,12 @@ def registerUser(request):
 
 def calendarView(request):
     return render(request, "familyApp/calendar.html")
+
+
+def newMessage(request):
+    if request.method == "POST":
+        newMessageForm = (request.POST, initial = {'sender': request.user.id, 'timestamp': datetime.now()})
+        if newMessageForm.is_valid():
+            newChatMessage = newMessageForm.save()
+        else:
+            print(newMessageForm.errors)

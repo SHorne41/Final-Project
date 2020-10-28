@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import CustomUser
+from .models import CustomUser, Message
 
 class CustomUserCreationForm(UserCreationForm):
 
@@ -24,3 +24,8 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
         fields = ('username', 'email', 'first_name', 'last_name', 'role', 'group', 'calendarEmail')
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ('sender', 'timestamp', 'content')
