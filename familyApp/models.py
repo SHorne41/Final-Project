@@ -13,7 +13,6 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
-
 class CalendarEvent(models.Model):
     name = models.CharField(max_length=100)
     date = models.DateField()

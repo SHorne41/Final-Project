@@ -1,6 +1,7 @@
 //variables
 $body-color: #7825a8;
-$panel-color: #59018c;
+$panel-color: #59018c;;
+$textArea-color: #934bb3;
 
 .page-content{
     background-color: $body-color;
@@ -50,4 +51,12 @@ $panel-color: #59018c;
 
 #messageContainer{
     border: 3px dashed red;
+}
+
+#typingArea{
+    background-color: $textArea-color;
+    resize: none;
+    overflow-y: auto;
+    display: block;
+    margin: auto;
 }

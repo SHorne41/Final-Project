@@ -48,4 +48,12 @@
   border: 3px dashed red;
 }
 
+#typingArea {
+  background-color: #934bb3;
+  resize: none;
+  overflow-y: auto;
+  display: block;
+  margin: auto;
+}
+
 /*# sourceMappingURL=style.css.map */
