@@ -6,6 +6,7 @@
   background-color: #59018c;
 }
 
+/*-------------------------Navigation Menu-------------------------*/
 #profile_tab {
   background-image: url(images/profile.png);
 }
@@ -36,6 +37,15 @@
   background-position: center;
   background-size: 100% 100%;
   background-repeat: no-repeat;
+}
+
+/*-------------------------Chat page-------------------------*/
+#chatContainer {
+  border: 1px solid black;
+}
+
+#messageContainer {
+  border: 3px dashed red;
 }
 
 /*# sourceMappingURL=style.css.map */

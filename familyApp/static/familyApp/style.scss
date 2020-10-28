@@ -10,6 +10,7 @@ $panel-color: #59018c;
     background-color: $panel-color;
 }
 
+/*-------------------------Navigation Menu-------------------------*/
 #profile_tab{
     background-image: url(images/profile.png);
 }
@@ -40,4 +41,13 @@ $panel-color: #59018c;
     background-position: center;
     background-size: 100% 100%;
     background-repeat: no-repeat;
+}
+
+/*-------------------------Chat page-------------------------*/
+#chatContainer{
+    border: 1px solid black;
+}
+
+#messageContainer{
+    border: 3px dashed red;
 }
