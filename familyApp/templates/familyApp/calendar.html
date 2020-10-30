@@ -2,6 +2,20 @@
 {% load static %}
 
 {% block body %}
+
+    <div id="messageDiv" style="display: none;">
+        <form id="messageForm" action="{% url 'send' %}" method="POST">
+            {% csrf_token %}
+            {{ messageForm.as_p }}
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+
+    <script>
+        console.log(document.querySelector("#id_content"));
+    </script>
+
     <div data-content="profile">
 
     </div>
@@ -16,7 +30,7 @@
     </div>
 
     <div data-content="chat" class="container-fluid vh-100">
-        
+
     </div>
 {% endblock %}
 

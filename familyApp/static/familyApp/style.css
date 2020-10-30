@@ -48,7 +48,7 @@
   border: 3px dashed red;
 }
 
-#typingArea {
+#id_content {
   background-color: #934bb3;
   resize: none;
   overflow-y: auto;

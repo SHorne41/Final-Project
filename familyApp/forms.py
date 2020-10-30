@@ -28,4 +28,11 @@ class CustomUserChangeForm(UserChangeForm):
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
-        fields = ('sender', 'timestamp', 'content')
+        fields = ['sender', 'timestamp', 'content']
+        widgets = {
+            'sender': forms.HiddenInput(),
+            'timestamp': forms.HiddenInput()
+        }
+        labels = {
+            'content': ''
+        }

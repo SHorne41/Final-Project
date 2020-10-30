@@ -8,9 +8,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link href="{% static 'familyApp/style.css' %}" rel="stylesheet">
     <script src="static/familyApp/script.js"></script>
+
 </head>
 <html>
     <body>
+        <div style="display: none;">
+            <p id="csrf-token">{% csrf_token %}</p>
+        </div>
         <div class="container-fluid vh-100">
             <div class="row vh-100">
                 <div class="col-2 panel nav-bar">

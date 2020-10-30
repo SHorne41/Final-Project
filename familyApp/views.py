@@ -39,12 +39,17 @@ def registerUser(request):
 
 
 def calendarView(request):
-    return render(request, "familyApp/calendar.html")
+    #Create message form to be used in chatView
+    newMessageForm = MessageForm(initial={'sender': request.user.id, 'timestamp': datetime.now()})
+    context = {'messageForm': newMessageForm}
+
+    return render(request, "familyApp/calendar.html", context)
 
 
 def newMessage(request):
     if request.method == "POST":
-        newMessageForm = (request.POST, initial = {'sender': request.user.id, 'timestamp': datetime.now()})
+        newMessageForm = MessageForm(request.POST, initial={'sender': request.user.id, 'timestamp': datetime.now()})
+        print(newMessageForm)
         if newMessageForm.is_valid():
             newChatMessage = newMessageForm.save()
         else:
