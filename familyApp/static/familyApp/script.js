@@ -76,35 +76,6 @@ function load_view(view){
         let messageForm = document.querySelector("#messageDiv");
         messageForm.style = "display: inline-block";
 
-        //messageForm (submits messageArea data to server)
-        /*let messageForm = document.createElement('form');
-        messageForm.method = "POST";
-        messageForm.action = "/sendMessage"
-        messageForm.id = "form1";*/
-
-        //Get a csrf_token for the newly generated form
-        /*document.getElementsByTagName("body")[0].onload = function (){
-            generate_csrf_token("form1");
-        };*/
-
-        //typingArea; where the user types their messages (used as 'content' for messageForm)
-        /*let typingArea = document.createElement('textArea');
-        typingArea.id = "id_content";
-        typingArea.name = "content";
-        typingArea.placeholder = "Say something..."
-        typingArea.cols = '125';
-        typingArea.rows = '8';
-
-        //sendButton; used to submit the data from typingArea to the server
-        let sendButton = document.createElement('button');
-        sendButton.type = "submit";
-        sendButton.innerHTML = "Send";*/
-
-        //messageArea ("col div"; where the messages will be typed)
-
-
-        //sendArea ("col div"; where the 'Send' button will be located)
-
         /*
         Append items to corresponding containers
         */
@@ -122,30 +93,4 @@ function load_view(view){
         chatDiv.appendChild(messageContainer);
 
     }
-
-    /*function generate_csrf_token(formID){
-        console.log(document.querySelector("#csrf-token input").value);
-        try{
-            var csrfValue = document.querySelector("#csrf-token input").value;
-        }
-        catch(err) {}
-
-        if (csrfValue == undefined){
-            try {
-                var csrfValue = Cookies.get('csrftoken');
-            }
-            catch(err){
-                console.log("Add {% csrf_token %} in template or use JS cookie library")
-                return;
-            }
-        }
-
-        var csrfToken = document.createElement("input");
-        csrfToken.setAttribute("type", "hidden");
-        csrfToken.name = "csrfmiddlewaretoken";
-        csrfToken.value = csrfValue;
-
-        messageForm.appendChild(csrfToken);
-        console.log(messageForm);
-    }*/
 }

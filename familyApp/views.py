@@ -1,5 +1,6 @@
 from django.shortcuts import render,  HttpResponse, HttpResponseRedirect
 from django.urls import reverse
+from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from .forms import CustomUserCreationForm, MessageForm
 from datetime import datetime
@@ -52,5 +53,6 @@ def newMessage(request):
         print(newMessageForm)
         if newMessageForm.is_valid():
             newChatMessage = newMessageForm.save()
+            return JsonResponse({"message": "Message sent successfully."}, status=201)
         else:
-            print(newMessageForm.errors)
+            return JsonResponse({"message": newMessageForm.errors}, status=400)
