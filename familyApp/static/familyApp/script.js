@@ -13,7 +13,22 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function send_message(){
-    
+    //Create new form and append data from messageForm
+    let formData = new FormData();
+    formData.append('content', document.querySelector("#messageForm").content.value);
+    formData.append('sender', document.querySelector("#messageForm").sender.value);
+    formData.append('timestamp', document.querySelector("#messageForm").timestamp.value);
+
+    //Retrieve CSRF token from layout, append to form
+    let csrfToken = document.querySelector("#csrf-token input[name='csrfmiddlewaretoken']").value;
+    formData.append('csrfmiddlewaretoken', csrfToken);
+
+    fetch('/sendMessage', {
+        method: "POST",
+        body: formData,
+        credentials: 'same-origin'
+    })
+
 }
 
 function load_view(view){
