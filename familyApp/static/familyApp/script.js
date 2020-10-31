@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
+function send_message(){
+    
+}
+
 function load_view(view){
     //Hide all content-areas. Then, using if block, display the one we need
     let divs = document.querySelectorAll("[data-content]");
@@ -75,6 +79,10 @@ function load_view(view){
         //Make the elements in the form visible
         let messageForm = document.querySelector("#messageDiv");
         messageForm.style = "display: inline-block";
+
+        //Assign appropriate function the the send button
+        let sendButton = document.querySelector("#sendButton");
+        sendButton.addEventListener('click', () => send_message());
 
         /*
         Append items to corresponding containers

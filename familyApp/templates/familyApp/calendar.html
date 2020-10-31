@@ -4,10 +4,10 @@
 {% block body %}
 
     <div id="messageDiv" style="display: none;">
-        <form id="messageForm" action="{% url 'send' %}" method="POST">
+        <form id="messageForm">
             {% csrf_token %}
             {{ messageForm.as_p }}
-            <button type="submit">Send</button>
+            <button id="sendMessage" type="submit">Send</button>
         </form>
     </div>
 
