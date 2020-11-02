@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#sync_feature').addEventListener('click', () => sync_calendar());
 
     //Load the calendar view by default
-    load_view('calendar');
+    load_view('chat');
 
 });
 
@@ -26,8 +26,12 @@ function send_message(){
     fetch('/sendMessage', {
         method: "POST",
         body: formData,
-        credentials: 'same-origin'
+        //credentials: 'same-origin'
     })
+    .then(response => response.json())
+    .then(result => {
+
+    });
 
 }
 
@@ -93,7 +97,7 @@ function load_view(view){
 
         //Make the elements in the form visible
         let messageForm = document.querySelector("#messageDiv");
-        messageForm.style = "display: inline-block";
+        messageForm.style = "display: flex";
 
         //Assign appropriate function the the send button
         let sendButton = document.querySelector("#sendButton");

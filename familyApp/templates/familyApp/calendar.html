@@ -3,12 +3,16 @@
 
 {% block body %}
 
-    <div id="messageDiv" style="display: none;">
-        <form id="messageForm">
-            {% csrf_token %}
-            {{ messageForm.as_p }}
-            <button id="sendButton" type="submit">Send</button>
-        </form>
+    <div id="messageDiv" class="flex" style="display: none;">
+        <div>
+            <form id="messageForm">
+                {% csrf_token %}
+                {{ messageForm.as_p }}
+            </form>
+        </div>
+        <div id="sendButtonContainer">
+            <button id="sendButton" form="messageForm" class="btn-lg" type="submit">Send</button>
+        </div>
     </div>
 
     <div data-content="profile">

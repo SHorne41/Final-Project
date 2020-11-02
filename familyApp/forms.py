@@ -31,7 +31,13 @@ class MessageForm(forms.ModelForm):
         fields = ['sender', 'timestamp', 'content']
         widgets = {
             'sender': forms.HiddenInput(),
-            'timestamp': forms.HiddenInput()
+            'timestamp': forms.HiddenInput(),
+            'content': forms.Textarea(attrs={
+                'id': 'newMessage',
+                'cols': '90',
+                'rows': '5',
+                'placeholder': 'Say something...'
+            })
         }
         labels = {
             'content': ''

@@ -48,12 +48,23 @@
   border: 3px dashed red;
 }
 
-#id_content {
+#newMessage {
   background-color: #934bb3;
   resize: none;
   overflow-y: auto;
-  display: block;
+  display: inline;
   margin: auto;
+  vertical-align: middle;
+}
+
+.flex {
+  margin: auto;
+  flex-direction: row;
+}
+
+#sendButtonContainer {
+  margin-left: 25px;
+  margin-top: 40px;
 }
 
 /*# sourceMappingURL=style.css.map */
