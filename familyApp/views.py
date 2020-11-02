@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from .forms import CustomUserCreationForm, MessageForm
 from datetime import datetime
+from .models import Message
 
 # Create your views here.
 
@@ -50,9 +51,14 @@ def calendarView(request):
 def newMessage(request):
     if request.method == "POST":
         newMessageForm = MessageForm(request.POST, initial={'sender': request.user.id, 'timestamp': datetime.now()})
-        print(newMessageForm)
         if newMessageForm.is_valid():
             newChatMessage = newMessageForm.save()
             return JsonResponse({"message": "Message sent successfully."}, status=201)
         else:
             return JsonResponse({"message": newMessageForm.errors}, status=400)
+
+
+def retrieveMessages(request):
+    if request.method == "GET":
+        allMessages = Message.objects.all()
+        print(allMessages)

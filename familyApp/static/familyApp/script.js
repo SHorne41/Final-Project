@@ -35,6 +35,12 @@ function send_message(){
 
 }
 
+function removeForm(){
+    let messageContainer = document.querySelector('#messageContainer');
+    let messageForm = document.querySelector('#messageForm');
+    messageContainer.removeChild(messageForm);
+}
+
 function load_view(view){
     //Hide all content-areas. Then, using if block, display the one we need
     let divs = document.querySelectorAll("[data-content]");
@@ -63,6 +69,10 @@ function load_view(view){
         let choresDiv = document.querySelector("[data-content='chores']")
         choresDiv.style.display = 'block';
         choresDiv.innerHTML = '';
+
+        //remove message form from messageContainer
+        removeForm();
+
         //Create any and all elements to be displayed and append them to the container
         let success = document.createElement('p');
         success.innerHTML = "Here's where all the chores will be displayed.";
@@ -96,7 +106,7 @@ function load_view(view){
         messageContainer.id = "messageContainer";
 
         //Make the elements in the form visible
-        let messageForm = document.querySelector("#messageDiv");
+        let messageForm = document.querySelector("#messageForm");
         messageForm.style = "display: flex";
 
         //Assign appropriate function the the send button
