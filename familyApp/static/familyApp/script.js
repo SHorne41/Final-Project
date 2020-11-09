@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
+function send_message(){
+    alert("Message has been sent!");
+}
+
 function load_view(view){
     //Hide all content-areas. Then, using if block, display the one we need
     let divs = document.querySelectorAll("[data-content]");
@@ -82,6 +86,12 @@ function load_view(view){
         typingArea.rows = '5';
 
         //sendArea ("col div"; where the 'Send' button will be located)
+        let sendButton = document.createElement('input');
+        sendButton.type = "button";
+        sendButton.value = "Send";
+        sendButton.id = "sendButton";
+        sendButton.addEventListener('click', () => send_message());
+
 
         /*
         Append items to corresponding containers
@@ -92,6 +102,7 @@ function load_view(view){
 
         //Message elements
         messageContainer.appendChild(typingArea);
+        messageContainer.appendChild(sendButton);
 
         //chatDiv elements
         chatDiv.appendChild(chatContainer);

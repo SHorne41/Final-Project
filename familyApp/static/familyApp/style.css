@@ -56,4 +56,11 @@
   margin: auto;
 }
 
+#sendButton {
+  height: 50px;
+  width: 80px;
+  margin-top: 50px;
+  margin-right: 25px;
+}
+
 /*# sourceMappingURL=style.css.map */
