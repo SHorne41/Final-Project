@@ -12,8 +12,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
+function create_bubble(){
+    alert("Message sent!");
+}
+
 function send_message(){
-    alert("Message has been sent!");
+    //Create a new Form element and append the content of the typingArea
+    let messageData = new FormData ();
+    let content = document.querySelector("#typingArea").value;
+    messageData.append('content', content);
+
+    //Pass the form to the server
+    fetch('/send', {
+        method: "POST",
+        body: messageData,
+    })
+    .then(response => response.json())
+    .then(result => {
+        create_bubble();
+    });
+
 }
 
 function load_view(view){

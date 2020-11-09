@@ -1,7 +1,12 @@
-from django.shortcuts import render,  HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from .forms import CustomUserCreationForm
+from django.views.decorators.csrf import csrf_exempt
+from .models import Message, CustomUser
+from datetime import datetime
+from django.http import JsonResponse
+
 
 # Create your views here.
 
@@ -39,3 +44,13 @@ def registerUser(request):
 
 def calendarView(request):
     return render(request, "familyApp/calendar.html")
+
+@csrf_exempt
+def sendMessage(request):
+    if request.method == "POST":
+        data = request.POST
+        sendingUser = CustomUser.objects.get(pk = request.user.id)
+        newMessage = Message(sender = sendingUser, content = data['content'], timestamp = datetime.now())
+        newMessage.save()
+        return JsonResponse({"error": "Email not found."}, status=201)
+    return JsonResponse({"error": "Email not found."}, status=404)
