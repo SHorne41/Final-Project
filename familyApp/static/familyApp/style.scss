@@ -47,10 +47,12 @@ $textArea-color: #934bb3;
 /*-------------------------Chat page-------------------------*/
 #chatContainer{
     border: 1px solid black;
+    border-radius: 10px;
 }
 
 #messageContainer{
-    border: 3px dashed red;
+    border: 1px solid black;
+    border-radius: 10px;
 }
 
 #typingArea{
@@ -59,6 +61,11 @@ $textArea-color: #934bb3;
     overflow-y: auto;
     display: block;
     margin: auto;
+    border-radius: 10px;
+}
+
+#typingArea:focus{
+    outline: none;
 }
 
 #sendButton{
@@ -66,4 +73,5 @@ $textArea-color: #934bb3;
     width: 80px;
     margin-top: 50px;
     margin-right: 25px;
+    border-radius: 10px;
 }
