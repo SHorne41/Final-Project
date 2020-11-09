@@ -75,8 +75,11 @@ function load_view(view){
         messageContainer.id = "messageContainer";
 
         //messageArea ("col div"; where the messages will be typed)
-        let message = document.createElement('p');
-        message.innerHTML = "Where all the messages will be typed";
+        let typingArea = document.createElement('textArea');
+        typingArea.id = "typingArea";
+        typingArea.placeholder = "Say something..."
+        typingArea.cols = '100';
+        typingArea.rows = '5';
 
         //sendArea ("col div"; where the 'Send' button will be located)
 
@@ -88,11 +91,11 @@ function load_view(view){
         chatContainer.appendChild(chatArea);
 
         //Message elements
-        messageContainer.appendChild(message);
+        messageContainer.appendChild(typingArea);
 
         //chatDiv elements
         chatDiv.appendChild(chatContainer);
         chatDiv.appendChild(messageContainer);
- 
+
     }
 }
