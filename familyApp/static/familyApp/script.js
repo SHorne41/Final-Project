@@ -13,35 +13,50 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function generate_convo(){
-    let chatArea = document.querySelector("#allMessages");
-    chatArea.innerHTML = '';
     fetch("/getMessages")
     .then(response => response.json())
     .then(messages => {
-        for (let i = 0; i < messages.length; i ++){
-            console.log(messages)
-            //Create divs for each message to be displayed in
-            let bubble = document.createElement('div');
-            bubble.classList.add("messageBubble");
-            let content = document.createElement('p');
-            let messageHeader = document.createElement('h5');
+        //Clear any content that may have been there previously
+        let chatArea = document.querySelector("#allMessages");
+        chatArea.innerHTML = '';
 
-            //Populate elements
-            content.innerHTML = messages[i].content;
-            messageHeader.innerHTML = messages[i].timestamp + " " + messages[i].sender + " says: ";
-            bubble.appendChild(messageHeader);
-            bubble.appendChild(content);
-
-            //Append bubble to chatDiv
-            chatArea.appendChild(bubble);
-        }
-        //Show messages from the bottom (newest) first. Scroll up to see older messages.
-        chatArea.scrollTop = chatArea.scrollHeight;
+        //Call on the create_bubble method to create the message bubbles
+        create_bubble(messages);
     });
 }
 
-function create_bubble(){
-    alert("Message was sent!");
+function create_bubble(messages){
+
+    let chatArea = document.querySelector("#allMessages");
+    let user_id = JSON.parse(document.getElementById("user_id").textContent);
+
+    for (let i = 0; i < messages.length; i ++){
+        //Create divs for each message to be displayed in
+        let bubble = document.createElement('div');
+        bubble.classList.add("messageBubble");
+        let content = document.createElement('p');
+        let messageHeader = document.createElement('h5');
+
+        //Determine position of bubble based on sender
+        if (user_id === messages[i].sender_id){
+            bubble.classList.add("rightBubble");
+        } else {
+            bubble.classList.add("leftBubble");
+        }
+
+        //Populate elements
+        content.innerHTML = messages[i].content;
+        messageHeader.innerHTML = messages[i].timestamp + " " + messages[i].sender + " says: ";
+        bubble.appendChild(messageHeader);
+        bubble.appendChild(content);
+
+        //Append bubble to chatDiv
+        chatArea.appendChild(bubble);
+    }
+
+    //Show messages from the bottom (newest) first. Scroll up to see older messages.
+    chatArea.scrollTop = chatArea.scrollHeight;
+
 }
 
 function send_message(){
@@ -57,9 +72,10 @@ function send_message(){
     })
     .then(response => response.json())
     .then(result => {
-        create_bubble();
+        create_bubble(result);
+        let typingArea = document.querySelector("#typingArea");
+        typingArea.value = "";
     });
-
 }
 
 function load_view(view){

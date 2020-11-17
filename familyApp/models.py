@@ -45,6 +45,7 @@ class Message(models.Model):
         return {
             "id": self.id,
             "sender": self.sender.email,
+            "sender_id": self.sender.id,
             "timestamp": self.timestamp.strftime("%b %-d %Y, %-I:%M %p"),
             "content": self.content,
         }

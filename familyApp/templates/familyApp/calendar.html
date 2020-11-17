@@ -2,6 +2,9 @@
 {% load static %}
 
 {% block body %}
+
+    {{ request.user.id|json_script:"user_id" }}
+
     <div data-content="profile">
 
     </div>

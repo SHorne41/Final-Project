@@ -56,8 +56,24 @@ $textArea-color: #934bb3;
     overflow-y: scroll;
 }
 
-#messageContainer{
+#allMessages::-webkit-scrollbar{
+    width: 12px;
+}
+
+#allMessages::-webkit-scrollbar-track{
+    background: $panel-color;
+    border-radius: 5px;
+    border: 2px solid black;
+}
+
+#allMessages::-webkit-scrollbar-thumb{
+    background: $body-color;
+    border-radius: 5px;
     border: 1px solid black;
+}
+
+#messageContainer{
+    border: 1.5px solid black;
     border-radius: 10px;
 }
 
@@ -90,5 +106,17 @@ $textArea-color: #934bb3;
     margin: 10px 0;
     opacity: 25%;
     max-width: 100%;
-    //margin-left: 5px;
+    display: table;
+}
+
+.leftBubble{
+    text-align: left;
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.rightBubble{
+    text-align: right;
+    margin-left: auto;
+    margin-right: 0;
 }

@@ -51,20 +51,21 @@ def sendMessage(request):
     if request.method == "POST":
         data = request.POST
         sendingUser = CustomUser.objects.get(pk = request.user.id)
-        newMessage = Message(sender = sendingUser, content = data['content'], timestamp = datetime.now())
+        timestamp = datetime.now()
+        newMessage = Message(sender = sendingUser, content = data['content'], timestamp = timestamp)
         newMessage.save()
-        return JsonResponse({"error": "Email not found."}, status=201)
+        justSent = Message.objects.get(timestamp = timestamp)
+        return JsonResponse([justSent.serialize()], safe=False)
     return JsonResponse({"error": "Email not found."}, status=404)
 
 def retrieveMessages(request):
     if request.method == "GET":
         numMessages = Message.objects.count()
-        print(numMessages)
-        mostRecentID = numMessages
+        mostRecentID = Message.objects.last().pk
         if numMessages > 10:
             leastRecentID = mostRecentID - 10
         else:
-            leastRecentID = 1
+            leastRecentID = mostRecentID - (numMessages + 1)
         recentMessages = Message.objects.filter(id__range=(leastRecentID, mostRecentID))
 
         return JsonResponse([message.serialize() for message in recentMessages], safe=False)
