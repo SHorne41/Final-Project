@@ -35,6 +35,8 @@ function generate_convo(){
             //Append bubble to chatDiv
             chatArea.appendChild(bubble);
         }
+        //Show messages from the bottom (newest) first. Scroll up to see older messages.
+        chatArea.scrollTop = chatArea.scrollHeight;
     });
 }
 
@@ -148,6 +150,5 @@ function load_view(view){
         chatDiv.appendChild(chatContainer);
         chatDiv.appendChild(messageContainer);
         generate_convo();
-
     }
 }
