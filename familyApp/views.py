@@ -54,3 +54,16 @@ def sendMessage(request):
         newMessage.save()
         return JsonResponse({"error": "Email not found."}, status=201)
     return JsonResponse({"error": "Email not found."}, status=404)
+
+def retrieveMessages(request):
+    if request.method == "GET":
+        numMessages = Message.objects.count()
+        mostRecentID = numMessages
+        if numMessages > 10:
+            leastRecentID = mostRecentID - 10
+        else:
+            leastRecentID = 1
+        recentMessages = []
+        for i in range (leastRecentID, mostRecentID):
+            recentMessages.append(Message.objects.filter(id = i))
+        return JsonResponse(recentMessages, safe=False)

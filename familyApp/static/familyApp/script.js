@@ -12,8 +12,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
+function generate_convo(){
+    let chatArea = document.querySelector("#allMessages");
+    chatArea.innerHTML = '';
+    fetch("/getMessages")
+    .then(response => response.json())
+    .then(messages => {
+        for (let i = 0; i < messages.length; i ++){
+            //Create divs for each message to be displayed in
+            let bubble = document.createElement('div');
+            let content = document.createElement('p');
+            let messageHeader = document.createElement('h5');
+
+            //Populate elements
+            content.innerHTML = messages[i].content;
+            messageHeader.innerHTML = messages[i].timestamp + " " + messages[i].sender + " says: ";
+            bubble.appendChild(messageHeader);
+            bubble.appendChild(content);
+
+            //Append bubble to chatDiv
+            chatArea.appendChild(bubble);
+        }
+    });
+}
+
 function create_bubble(){
-    alert("Message sent!");
+    alert("Message was sent!");
 }
 
 function send_message(){
@@ -86,10 +110,7 @@ function load_view(view){
         //chatArea ("col div"; contains all chat elements)
         let chatArea = document.createElement('div');
         chatArea.class = "col-8";
-
-        //Messages to be displayed in the chatArea
-        let chatMessage = document.createElement('p');
-        chatMessage.innerHTML = "All the messages";
+        chatArea.id = "allMessages";
 
         //messageContainer ("row div"; seperates message container from chat container)
         let messageContainer = document.createElement('div');
@@ -115,7 +136,6 @@ function load_view(view){
         Append items to corresponding containers
         */
         //Chat elements
-        chatArea.appendChild(chatMessage);
         chatContainer.appendChild(chatArea);
 
         //Message elements
@@ -125,6 +145,7 @@ function load_view(view){
         //chatDiv elements
         chatDiv.appendChild(chatContainer);
         chatDiv.appendChild(messageContainer);
+        generate_convo();
 
     }
 }
