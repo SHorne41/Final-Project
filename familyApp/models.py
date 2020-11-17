@@ -40,3 +40,11 @@ class Message(models.Model):
     sender = models.ForeignKey("CustomUser", on_delete=models.CASCADE)
     timestamp = models.DateTimeField()
     content = models.TextField(max_length=480)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "sender": self.sender.email,
+            "timestamp": self.timestamp.strftime("%b %-d %Y, %-I:%M %p"),
+            "content": self.content,
+        }

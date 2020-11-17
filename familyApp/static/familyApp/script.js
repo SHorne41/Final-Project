@@ -19,6 +19,7 @@ function generate_convo(){
     .then(response => response.json())
     .then(messages => {
         for (let i = 0; i < messages.length; i ++){
+            console.log(messages)
             //Create divs for each message to be displayed in
             let bubble = document.createElement('div');
             let content = document.createElement('p');

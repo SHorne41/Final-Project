@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Message, CustomUser
 from datetime import datetime
 from django.http import JsonResponse
+from django.core import serializers
 
 
 # Create your views here.
@@ -58,12 +59,12 @@ def sendMessage(request):
 def retrieveMessages(request):
     if request.method == "GET":
         numMessages = Message.objects.count()
+        print(numMessages)
         mostRecentID = numMessages
         if numMessages > 10:
             leastRecentID = mostRecentID - 10
         else:
             leastRecentID = 1
-        recentMessages = []
-        for i in range (leastRecentID, mostRecentID):
-            recentMessages.append(Message.objects.filter(id = i))
-        return JsonResponse(recentMessages, safe=False)
+        recentMessages = Message.objects.filter(id__range=(leastRecentID, mostRecentID))
+
+        return JsonResponse([message.serialize() for message in recentMessages], safe=False)
