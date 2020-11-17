@@ -22,6 +22,7 @@ function generate_convo(){
             console.log(messages)
             //Create divs for each message to be displayed in
             let bubble = document.createElement('div');
+            bubble.classList.add("messageBubble");
             let content = document.createElement('p');
             let messageHeader = document.createElement('h5');
 
