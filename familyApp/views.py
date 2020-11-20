@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
@@ -58,14 +59,27 @@ def sendMessage(request):
         return JsonResponse([justSent.serialize()], safe=False)
     return JsonResponse({"error": "Email not found."}, status=404)
 
+@csrf_exempt
 def retrieveMessages(request):
-    if request.method == "GET":
+    if request.method == "POST":
+        data = json.loads(request.body)
+
+        #Determine index of most recent message not being displayed to the user; retrieve that message's ID
+        newestMessageID = Message.objects.filter().last().pk
+        mostRecentIndex = newestMessageID - data.get("messageCount")
+        mostRecentID = Message.objects.get(pk=mostRecentIndex).pk
+
+        #Determine the index of the least recent message to display to the user based on the total number of messages
         numMessages = Message.objects.count()
-        mostRecentID = Message.objects.last().pk
-        if numMessages > 10:
+        oldestMessageID = Message.objects.filter().first().pk
+        if numMessages < 10:
+            leastRecentID = oldestMessageID
+        elif mostRecentIndex < 10:
+            leastRecentID = oldestMessageID
+        elif mostRecentIndex > 10:
             leastRecentID = mostRecentID - 10
-        else:
-            leastRecentID = mostRecentID - (numMessages + 1)
+
+        #Retrieve messages found in range leastRecentID -> mostRecentID
         recentMessages = Message.objects.filter(id__range=(leastRecentID, mostRecentID))
 
         return JsonResponse([message.serialize() for message in recentMessages], safe=False)

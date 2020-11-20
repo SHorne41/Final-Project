@@ -12,8 +12,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-function generate_convo(){
-    fetch("/getMessages")
+function retrieve_messages(){
+
+    /*Extract the number of messages currently displayed on the user's screen
+    Will be used as the "mostRecentID" server-side when extracting the next batch of messages*/
+    let messageCount = document.querySelector("#allMessages").childElementCount;
+
+    fetch("/getMessages", {
+        method: "POST",
+        body: JSON.stringify({
+            messageCount: messageCount,
+        })
+    })
     .then(response => response.json())
     .then(messages => {
         //Clear any content that may have been there previously
@@ -40,8 +50,10 @@ function create_bubble(messages){
         //Determine position of bubble based on sender
         if (user_id === messages[i].sender_id){
             bubble.classList.add("rightBubble");
+            console.log("right");
         } else {
             bubble.classList.add("leftBubble");
+            console.log("left");
         }
 
         //Populate elements
@@ -165,6 +177,6 @@ function load_view(view){
         //chatDiv elements
         chatDiv.appendChild(chatContainer);
         chatDiv.appendChild(messageContainer);
-        generate_convo();
+        retrieve_messages();
     }
 }
