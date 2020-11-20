@@ -50,10 +50,8 @@ function create_bubble(messages){
         //Determine position of bubble based on sender
         if (user_id === messages[i].sender_id){
             bubble.classList.add("rightBubble");
-            console.log("right");
         } else {
             bubble.classList.add("leftBubble");
-            console.log("left");
         }
 
         //Populate elements
@@ -178,5 +176,14 @@ function load_view(view){
         chatDiv.appendChild(chatContainer);
         chatDiv.appendChild(messageContainer);
         retrieve_messages();
+
+        //Infinite scroll
+
+        chatArea.onscroll = function(){
+            if (chatArea.scrollTop == 0){
+                console.log("Loading more messages");
+                retrieve_messages();
+            }
+        };
     }
 }

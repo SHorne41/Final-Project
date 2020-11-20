@@ -72,12 +72,12 @@ def retrieveMessages(request):
         #Determine the index of the least recent message to display to the user based on the total number of messages
         numMessages = Message.objects.count()
         oldestMessageID = Message.objects.filter().first().pk
-        if numMessages < 10:
+        if numMessages < 5:
             leastRecentID = oldestMessageID
-        elif mostRecentIndex < 10:
+        elif mostRecentIndex < (oldestMessageID + 4):
             leastRecentID = oldestMessageID
-        elif mostRecentIndex > 10:
-            leastRecentID = mostRecentID - 10
+        elif mostRecentIndex > (oldestMessageID + 4):
+            leastRecentID = mostRecentID - 5
 
         #Retrieve messages found in range leastRecentID -> mostRecentID
         recentMessages = Message.objects.filter(id__range=(leastRecentID, mostRecentID))
