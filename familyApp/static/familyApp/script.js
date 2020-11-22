@@ -47,6 +47,7 @@ function create_bubble(messages, scroll){
 
     let chatArea = document.querySelector("#allMessages");
     let user_id = JSON.parse(document.getElementById("user_id").textContent);
+    let scrollMessages = [];
 
     for (let i = 0; i < messages.length; i ++){
         //Create divs for each message to be displayed in
@@ -68,9 +69,9 @@ function create_bubble(messages, scroll){
         bubble.appendChild(messageHeader);
         bubble.appendChild(content);
 
-        //If the user scroll to the top, append to the top
+        //If the user scroll to the top, add to the array
         if (scroll){
-            chatArea.insertBefore(bubble, chatArea.firstChild);
+            scrollMessages[i] = bubble;
         //Otherwise, append it to the bottom
         } else {
             //Append bubble to chatDiv
@@ -78,9 +79,16 @@ function create_bubble(messages, scroll){
             //Show messages from the bottom (newest) first. Scroll up to see older messages.
             chatArea.scrollTop = chatArea.scrollHeight;
         }
-
     }
 
+    //Required, otherwise insertBefore will have the messages in reverse order
+    if (scroll){
+        let previousScrollHeight = chatArea.scrollHeight;
+        for (let i = scrollMessages.length - 1; i > 0; i --){
+            chatArea.insertBefore(scrollMessages[i], chatArea.firstChild);
+        }
+        chatArea.scrollTop = chatArea.scrollHeight - previousScrollHeight;     //Stops scrollbar from jumping to the top once the messages have been appended
+    }
 }
 
 function send_message(){
@@ -193,7 +201,6 @@ function load_view(view){
 
         chatArea.onscroll = function(){
             if (chatArea.scrollTop == 0){
-                console.log("Loading more messages");
                 retrieve_messages(true);
             }
         };
