@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-function retrieve_messages(){
+function retrieve_messages(scroll){
 
     /*Extract the number of messages currently displayed on the user's screen
     Will be used as the "mostRecentID" server-side when extracting the next batch of messages*/
@@ -24,18 +24,26 @@ function retrieve_messages(){
             messageCount: messageCount,
         })
     })
-    .then(response => response.json())
+    .then(response => response.json().then(data => ({status: response.status, body: data})))
     .then(messages => {
-        //Clear any content that may have been there previously
-        let chatArea = document.querySelector("#allMessages");
-        chatArea.innerHTML = '';
 
-        //Call on the create_bubble method to create the message bubbles
-        create_bubble(messages);
+        //Check to see if there are any messages left to display
+        if (messages["status"] == 201){     //There are messages returned from the fetch call
+            //Only clear the content if the user is navigating to the chat from another window
+            console.log(messages["status"]);
+            if (!scroll){
+                //Clear any content that may have been there previously
+                let chatArea = document.querySelector("#allMessages");
+                chatArea.innerHTML = '';
+            }
+
+            //Call on the create_bubble method to create the message bubbles
+            create_bubble(messages["body"], scroll);
+        }
     });
 }
 
-function create_bubble(messages){
+function create_bubble(messages, scroll){
 
     let chatArea = document.querySelector("#allMessages");
     let user_id = JSON.parse(document.getElementById("user_id").textContent);
@@ -60,12 +68,18 @@ function create_bubble(messages){
         bubble.appendChild(messageHeader);
         bubble.appendChild(content);
 
-        //Append bubble to chatDiv
-        chatArea.appendChild(bubble);
-    }
+        //If the user scroll to the top, append to the top
+        if (scroll){
+            chatArea.insertBefore(bubble, chatArea.firstChild);
+        //Otherwise, append it to the bottom
+        } else {
+            //Append bubble to chatDiv
+            chatArea.appendChild(bubble);
+            //Show messages from the bottom (newest) first. Scroll up to see older messages.
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
 
-    //Show messages from the bottom (newest) first. Scroll up to see older messages.
-    chatArea.scrollTop = chatArea.scrollHeight;
+    }
 
 }
 
@@ -82,7 +96,7 @@ function send_message(){
     })
     .then(response => response.json())
     .then(result => {
-        create_bubble(result);
+        create_bubble(result, false);
         let typingArea = document.querySelector("#typingArea");
         typingArea.value = "";
     });
@@ -126,8 +140,6 @@ function load_view(view){
         let chatDiv = document.querySelector("[data-content='chat']")
         chatDiv.style.display = 'block';
         chatDiv.innerHTML = '';
-
-        //Create any and all elements to be displayed, then append them to the container
 
         /*
         Create any and all elements to be displayed, then append them to the container
@@ -175,14 +187,14 @@ function load_view(view){
         //chatDiv elements
         chatDiv.appendChild(chatContainer);
         chatDiv.appendChild(messageContainer);
-        retrieve_messages();
+        retrieve_messages(false);
 
         //Infinite scroll
 
         chatArea.onscroll = function(){
             if (chatArea.scrollTop == 0){
                 console.log("Loading more messages");
-                retrieve_messages();
+                retrieve_messages(true);
             }
         };
     }

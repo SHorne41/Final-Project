@@ -64,22 +64,27 @@ def retrieveMessages(request):
     if request.method == "POST":
         data = json.loads(request.body)
 
-        #Determine index of most recent message not being displayed to the user; retrieve that message's ID
-        newestMessageID = Message.objects.filter().last().pk
-        mostRecentIndex = newestMessageID - data.get("messageCount")
-        mostRecentID = Message.objects.get(pk=mostRecentIndex).pk
-
-        #Determine the index of the least recent message to display to the user based on the total number of messages
+        #Determine if there are any messages that haven't yet been displayed to the user
         numMessages = Message.objects.count()
-        oldestMessageID = Message.objects.filter().first().pk
-        if numMessages < 5:
-            leastRecentID = oldestMessageID
-        elif mostRecentIndex < (oldestMessageID + 4):
-            leastRecentID = oldestMessageID
-        elif mostRecentIndex > (oldestMessageID + 4):
-            leastRecentID = mostRecentID - 5
+        if numMessages - data.get("messageCount") != 0:
+            #Determine index of most recent message not being displayed to the user; retrieve that message's ID
+            newestMessageID = Message.objects.filter().last().pk
+            mostRecentIndex = newestMessageID - data.get("messageCount")
+            mostRecentID = Message.objects.get(pk=mostRecentIndex).pk
 
-        #Retrieve messages found in range leastRecentID -> mostRecentID
-        recentMessages = Message.objects.filter(id__range=(leastRecentID, mostRecentID))
+            #Determine the index of the least recent message to display to the user based on the total number of messages
+            oldestMessageID = Message.objects.filter().first().pk
+            if numMessages < 5:
+                leastRecentID = oldestMessageID
+            elif mostRecentIndex < (oldestMessageID + 4):
+                leastRecentID = oldestMessageID
+            elif mostRecentIndex > (oldestMessageID + 4):
+                leastRecentID = mostRecentID - 5
 
-        return JsonResponse([message.serialize() for message in recentMessages], safe=False)
+            #Retrieve messages found in range leastRecentID -> mostRecentID
+            recentMessages = Message.objects.filter(id__range=(leastRecentID, mostRecentID))
+
+            return JsonResponse([message.serialize() for message in recentMessages], safe=False, status=201)
+
+
+        return JsonResponse({"message": "All messages being displayed"}, status=200)
