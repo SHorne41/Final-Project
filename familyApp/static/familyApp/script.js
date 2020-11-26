@@ -138,10 +138,91 @@ function load_view(view){
         let choresDiv = document.querySelector("[data-content='chores']")
         choresDiv.style.display = 'block';
         choresDiv.innerHTML = '';
-        //Create any and all elements to be displayed and append them to the container
-        let success = document.createElement('p');
-        success.innerHTML = "Here's where all the chores will be displayed.";
-        choresDiv.appendChild(success);
+
+        /*
+        Create any and all elements to be displayed and append them to the container
+        */
+
+        /*
+        Create the modal for adding lists
+        */
+        //Containing div
+        let addListModal = document.createElement('div');
+        addListModal.classList.add("modal", "fade");
+        addListModal.id = "addListModal";
+        addListModal.setAttribute("tableindex", "-1");
+        addListModal.setAttribute("role", "dialog");
+        addListModal.setAttribute("aria-labelledby", "addListModalLabel");
+        addListModal.setAttribute("aria-hidden", "true");
+
+        //Inner Div (dialog)
+        let addListModalDialog = document.createElement('div');
+        addListModalDialog.classList.add("modal-dialog");
+        addListModalDialog.setAttribute("role", "document");
+
+        //Inner Div (content)
+        let addListModalContent = document.createElement('div');
+        addListModalContent.classList.add("modal-content");
+
+        //Inner-most div (header)
+        let addListModalHeader = document.createElement('div');
+        addListModalHeader.classList.add("modal-header");
+
+        //Header content
+        let modalTitle = document.createElement("h5");
+        modalTitle.classList.add("modal-title");
+        modalTitle.id = "addListModalLabel";
+        modalTitle.innerHTML = "Create a New List";
+        //Header close button
+        let modalClose = document.createElement("button");
+        modalClose.classList.add("close");
+        modalClose.setAttribute("data-dismiss", "modal");
+        modalClose.setAttribute("aria-label", "Close");
+        //Header span
+        let modalCloseSpan = document.createElement("span");
+        modalCloseSpan.setAttribute("aria-hidden", "true");
+        modalCloseSpan.innerHTML = "&times;";
+
+        //Body content
+        let modalBody = document.createElement("div");
+        let listTitle = document.createElement("textArea");
+        listTitle.placeholder = "Insert Title Here...";
+        listTitle.id = "newListTitle";
+        let createListButton = document.createElement("button");
+        createListButton.classList.add("btn", "btn-primary");
+        createListButton.innerHTML = "Create List";
+        //Add event listener to button
+        let cancelListButton = document.createElement("button");
+        cancelListButton.classList.add("btn", "btn-secondary");
+        cancelListButton.setAttribute("data-dismiss", "modal");
+        cancelListButton.innerHTML = "Cancel";
+
+        //Append all elements to their appropriate containers
+        modalBody.appendChild(listTitle);
+        modalBody.appendChild(createListButton);
+        modalBody.appendChild(cancelListButton);
+
+        addListModalHeader.appendChild(modalTitle);
+        modalClose.appendChild(modalCloseSpan);
+        addListModalHeader.appendChild(modalClose);
+
+        addListModalContent.appendChild(addListModalHeader);
+        addListModalContent.appendChild(modalBody);
+
+        addListModalDialog.appendChild(addListModalContent);
+        addListModal.appendChild(addListModalDialog);
+
+
+
+        //Create the "Add list" button
+        let addListButton = document.createElement('button');
+        addListButton.innerHTML = "+";
+        addListButton.classList.add("btn", "btn-link");
+        addListButton.setAttribute("data-toggle", "modal");
+        addListButton.setAttribute("data-target", "#addListModal");
+
+        choresDiv.appendChild(addListButton);
+        choresDiv.appendChild(addListModal);
 
     } else if (view === 'chat'){
         //Select the chat container, set its display, and erase any previous content
