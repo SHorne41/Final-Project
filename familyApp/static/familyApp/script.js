@@ -12,6 +12,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
+function create_list(listTitle){
+    alert("Creating a list!!!");
+    let listModal = document.querySelector("#addListModal");
+    listModal.close();
+}
+
 function retrieve_messages(scroll){
 
     /*Extract the number of messages currently displayed on the user's screen
@@ -191,7 +197,7 @@ function load_view(view){
         let createListButton = document.createElement("button");
         createListButton.classList.add("btn", "btn-primary");
         createListButton.innerHTML = "Create List";
-        //Add event listener to button
+        createListButton.addEventListener('click', () => create_list(listTitle.value));
         let cancelListButton = document.createElement("button");
         cancelListButton.classList.add("btn", "btn-secondary");
         cancelListButton.setAttribute("data-dismiss", "modal");
@@ -211,8 +217,6 @@ function load_view(view){
 
         addListModalDialog.appendChild(addListModalContent);
         addListModal.appendChild(addListModalDialog);
-
-
 
         //Create the "Add list" button
         let addListButton = document.createElement('button');
