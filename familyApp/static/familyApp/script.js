@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function create_list(listTitle){
     alert("Creating a list!!!");
-    let listModal = document.querySelector("#addListModal");
-    listModal.close();
+    $("#addListModal").modal('toggle');
+    //$("#addListModal").modal({backdrop: false});
 }
 
 function retrieve_messages(scroll){
