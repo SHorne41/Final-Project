@@ -12,10 +12,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-function create_list(listTitle){
-    alert("Creating a list!!!");
+function create_list(listForm){
+    //Retrieve list title from the modal, send to server to create new list onbject
+    let title = listForm.listTitle.value;
+    console.log(title);
+    alert(title);
     $("#addListModal").modal('toggle');
-    //$("#addListModal").modal({backdrop: false});
 }
 
 function retrieve_messages(scroll){
@@ -191,22 +193,34 @@ function load_view(view){
 
         //Body content
         let modalBody = document.createElement("div");
-        let listTitle = document.createElement("textArea");
+        let listForm = document.createElement("form");
+        listForm.id = "newListForm";
+        listForm.setAttribute("action", "");
+        listForm.setAttribute("method", "");
+        let listTitle = document.createElement("input");
+        listTitle.setAttribute("type", "text");
+        listTitle.required = true;
         listTitle.placeholder = "Insert Title Here...";
         listTitle.id = "newListTitle";
+
         let createListButton = document.createElement("button");
+        createListButton.setAttribute("type", "submit");
+        createListButton.setAttribute("form", "newListForm");
         createListButton.classList.add("btn", "btn-primary");
         createListButton.innerHTML = "Create List";
-        createListButton.addEventListener('click', () => create_list(listTitle.value));
+        createListButton.addEventListener('submit', () => create_list(listForm));
+
         let cancelListButton = document.createElement("button");
         cancelListButton.classList.add("btn", "btn-secondary");
         cancelListButton.setAttribute("data-dismiss", "modal");
         cancelListButton.innerHTML = "Cancel";
 
         //Append all elements to their appropriate containers
-        modalBody.appendChild(listTitle);
-        modalBody.appendChild(createListButton);
+        listForm.appendChild(listTitle);
+        listForm.appendChild(createListButton);
         modalBody.appendChild(cancelListButton);
+        modalBody.appendChild(listForm);
+
 
         addListModalHeader.appendChild(modalTitle);
         modalClose.appendChild(modalCloseSpan);
