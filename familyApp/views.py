@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from .forms import CustomUserCreationForm
 from django.views.decorators.csrf import csrf_exempt
-from .models import Message, CustomUser
+from .models import Message, CustomUser, TodoList
 from datetime import datetime
 from django.http import JsonResponse
 from django.core import serializers
@@ -46,6 +46,22 @@ def registerUser(request):
 
 def calendarView(request):
     return render(request, "familyApp/calendar.html")
+
+@csrf_exempt
+def createList(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        print(data.get("name"))
+
+        #If a list with that title already exists, return an error message
+        if (TodoList.objects.filter(name=data.get("name")).exists()):
+            return JsonResponse({"error": "A list with that name already exists. Please select a different list title and try again."}, status = 409)
+
+        #Otherwise, retreive all pertinent information and create the new list
+        creator = CustomUser.objects.get(pk = request.user.id)
+        newList = TodoList(owner = creator, name = data.get("name"))
+        newList.save()
+        return JsonResponse({"success": "The list was created succesfully"}, status = 201)
 
 @csrf_exempt
 def sendMessage(request):

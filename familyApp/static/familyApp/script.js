@@ -13,10 +13,29 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function create_list(){
-    //Retrieve list title from the modal, send to server to create new list onbject
+    //Retrieve list title from the modal, send to server to create new list object
     let title = document.getElementById("newListForm").elements["newListTitle"].value;
-    console.log(title);
-    alert(title);
+
+    //Make API call to attempt to create message
+    fetch("/createList", {
+        method: "POST",
+        body: JSON.stringify({
+            name: title,
+        })
+    })
+    .then(response => response.json().then(data => ({status: response.status, body: data})))
+    .then(result =>{
+        //If there was already a list with the name supplied in this request, generate error
+        if (result["status"] == 409){
+            alert("A list with that title has already been created. Please select a new title and try again");
+        }
+        //If the server created the list, however, generate a "sticky note" to represent the new list
+        else if (result["status"] == 201){
+            alert("Creating list!!");
+        }
+    });
+
+    //Remove the modal from the screen once the list has been created (or error message is generated)
     $("#addListModal").modal('toggle');
 }
 
