@@ -12,9 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-function create_list(listForm){
+function create_list(){
     //Retrieve list title from the modal, send to server to create new list onbject
-    let title = listForm.listTitle.value;
+    let title = document.getElementById("newListForm").elements["newListTitle"].value;
     console.log(title);
     alert(title);
     $("#addListModal").modal('toggle');
@@ -195,30 +195,22 @@ function load_view(view){
         let modalBody = document.createElement("div");
         let listForm = document.createElement("form");
         listForm.id = "newListForm";
-        listForm.setAttribute("action", "");
-        listForm.setAttribute("method", "");
+        listForm.setAttribute("onsubmit", "return create_list()");
         let listTitle = document.createElement("input");
         listTitle.setAttribute("type", "text");
         listTitle.required = true;
         listTitle.placeholder = "Insert Title Here...";
-        listTitle.id = "newListTitle";
+        listTitle.name = "newListTitle";
 
         let createListButton = document.createElement("button");
         createListButton.setAttribute("type", "submit");
         createListButton.setAttribute("form", "newListForm");
         createListButton.classList.add("btn", "btn-primary");
         createListButton.innerHTML = "Create List";
-        createListButton.addEventListener('submit', () => create_list(listForm));
-
-        let cancelListButton = document.createElement("button");
-        cancelListButton.classList.add("btn", "btn-secondary");
-        cancelListButton.setAttribute("data-dismiss", "modal");
-        cancelListButton.innerHTML = "Cancel";
 
         //Append all elements to their appropriate containers
         listForm.appendChild(listTitle);
         listForm.appendChild(createListButton);
-        modalBody.appendChild(cancelListButton);
         modalBody.appendChild(listForm);
 
 
