@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function create_list(){
+
     //Retrieve list title from the modal, send to server to create new list object
     let title = document.getElementById("newListForm").elements["newListTitle"].value;
 
@@ -28,15 +29,35 @@ function create_list(){
         //If there was already a list with the name supplied in this request, generate error
         if (result["status"] == 409){
             alert("A list with that title has already been created. Please select a new title and try again");
+            //Remove modal from the screen; quit the function
+            $("#addListModal").modal('toggle');
+            return;
         }
         //If the server created the list, however, generate a "sticky note" to represent the new list
         else if (result["status"] == 201){
-            alert("Creating list!!");
+            //Remove modal from the screen; create the sticky note
+            $("#addListModal").modal('toggle');
+
+            let choresDiv = document.querySelector("[data-content='chores']");
+
+            let newSticky = document.createElement("div");
+            newSticky.classList.add("stickyNotes");
+            let stickyTitle = document.createElement("h3");
+            stickyTitle.innerHTML = title;
+
+            newSticky.appendChild(stickyTitle);
+            choresDiv.appendChild(newSticky);
         }
     });
 
     //Remove the modal from the screen once the list has been created (or error message is generated)
-    $("#addListModal").modal('toggle');
+}
+
+/*
+    Used when the user navigates to the chores pane. Retrieves all of their to-do lists, then calls on create_list() to diplay lists
+*/
+function retrieve_lists(){
+
 }
 
 function retrieve_messages(scroll){
@@ -215,6 +236,9 @@ function load_view(view){
         let listForm = document.createElement("form");
         listForm.id = "newListForm";
         listForm.setAttribute("onsubmit", "return create_list()");
+        //function to stop page from reloading when the form is submitted
+        function handleForm(event) {event.preventDefault();}
+        listForm.addEventListener('submit', handleForm);
         let listTitle = document.createElement("input");
         listTitle.setAttribute("type", "text");
         listTitle.required = true;

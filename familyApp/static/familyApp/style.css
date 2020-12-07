@@ -39,6 +39,28 @@
   background-repeat: no-repeat;
 }
 
+/*------------------------Chores page-------------------------*/
+#menuContainer {
+  border: 1px solid black;
+}
+
+#menuContent {
+  display: inline;
+}
+
+#choresTitle {
+  text-align: center;
+}
+
+.stickyNotes {
+  background-color: #FFFF88;
+  opacity: 100%;
+}
+
+.stickyNotes h3 {
+  text-align: center;
+}
+
 /*-------------------------Chat page-------------------------*/
 #chatContainer {
   border: 1px solid black;

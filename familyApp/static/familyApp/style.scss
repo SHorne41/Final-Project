@@ -2,6 +2,7 @@
 $body-color: #7825a8;
 $panel-color: #59018c;
 $textArea-color: #934bb3;
+$stickyColor: #FFFF88;
 
 .page-content{
     background-color: $body-color;
@@ -42,6 +43,28 @@ $textArea-color: #934bb3;
     background-position: center;
     background-size: 100% 100%;
     background-repeat: no-repeat;
+}
+
+/*------------------------Chores page-------------------------*/
+#menuContainer{
+    border: 1px solid black;
+}
+
+#menuContent{
+    display: inline;
+}
+
+#choresTitle{
+    text-align: center;
+}
+
+.stickyNotes{
+    background-color: $stickyColor;
+    opacity: 100%;
+}
+
+.stickyNotes h3{
+    text-align: center;
 }
 
 /*-------------------------Chat page-------------------------*/
