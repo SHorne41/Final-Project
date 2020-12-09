@@ -12,12 +12,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-function create_list(){
+function generate_sticky(lists){
+    //Create the sticky notes; append to the choresDiv
+    let choresDiv = document.querySelector("[data-content='chores']");
 
+    for (i = 0; i < lists.length; i ++){
+
+         let newSticky = document.createElement("div");
+         newSticky.classList.add("stickyNotes");
+         let stickyTitle = document.createElement("h3");
+         console.log(lists[i]);
+         stickyTitle.innerHTML = lists[i];
+
+         newSticky.appendChild(stickyTitle);
+         choresDiv.appendChild(newSticky);
+    }
+}
+
+//When the user creates a new list in the chores pane; create a TodoList instance on the server
+function create_list(){
     //Retrieve list title from the modal, send to server to create new list object
     let title = document.getElementById("newListForm").elements["newListTitle"].value;
 
-    //Make API call to attempt to create message
+    //Make API call to attempt to create list
     fetch("/createList", {
         method: "POST",
         body: JSON.stringify({
@@ -33,23 +50,15 @@ function create_list(){
             $("#addListModal").modal('toggle');
             return;
         }
-        //If the server created the list, however, generate a "sticky note" to represent the new list
+        //If the server created the list, however, assign the title of the new list to 'lists' so a sticky note can be created
         else if (result["status"] == 201){
             //Remove modal from the screen; create the sticky note
             $("#addListModal").modal('toggle');
 
-            let choresDiv = document.querySelector("[data-content='chores']");
-
-            let newSticky = document.createElement("div");
-            newSticky.classList.add("stickyNotes");
-            let stickyTitle = document.createElement("h3");
-            stickyTitle.innerHTML = title;
-
-            newSticky.appendChild(stickyTitle);
-            choresDiv.appendChild(newSticky);
+            let lists = [title];
+            generate_sticky(lists);
         }
     });
-
 }
 
 /*

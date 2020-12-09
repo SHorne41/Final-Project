@@ -46,6 +46,10 @@ $stickyColor: #FFFF88;
 }
 
 /*------------------------Chores page-------------------------*/
+#choresDiv{
+    overflow-y: scroll;
+}
+
 #menuContainer{
     border: 1px solid black;
 }
@@ -63,6 +67,7 @@ $stickyColor: #FFFF88;
     opacity: 100%;
     width: 250px;
     height: 250px;
+    display: inline;
 }
 
 .stickyNotes h3{
