@@ -50,7 +50,6 @@ function create_list(){
         }
     });
 
-    //Remove the modal from the screen once the list has been created (or error message is generated)
 }
 
 /*

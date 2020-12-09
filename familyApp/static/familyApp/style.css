@@ -55,6 +55,8 @@
 .stickyNotes {
   background-color: #FFFF88;
   opacity: 100%;
+  width: 250px;
+  height: 250px;
 }
 
 .stickyNotes h3 {
