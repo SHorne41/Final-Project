@@ -8,5 +8,6 @@ urlpatterns = [
     path("calendar", views.calendarView, name="calendar"),
     path("send", views.sendMessage, name="send"),
     path("getMessages", views.retrieveMessages, name="retrieve"),
-    path("createList", views.createList, name="create")
+    path("createList", views.createList, name="create"),
+    path("getLists", views.retrieveLists, name="reLists")
 ]

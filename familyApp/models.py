@@ -30,6 +30,11 @@ class TodoList(models.Model):
     owner = models.ForeignKey("CustomUser", on_delete=models.CASCADE)
     members = models.ManyToManyField("CustomUser", related_name="list_members")
 
+    def serialize(self):
+        return {
+            "name": self.name
+        }
+
 class TodoEvent(models.Model):
     name = models.CharField(max_length=100)
     dealine = models.DateTimeField()

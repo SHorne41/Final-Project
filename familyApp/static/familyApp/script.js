@@ -16,13 +16,14 @@ function generate_sticky(lists){
     //Create the sticky notes; append to the choresDiv
     let choresDiv = document.querySelector("[data-content='chores']");
 
+    console.log(lists);
+
     for (i = 0; i < lists.length; i ++){
 
          let newSticky = document.createElement("div");
          newSticky.classList.add("stickyNotes");
          let stickyTitle = document.createElement("h3");
-         console.log(lists[i]);
-         stickyTitle.innerHTML = lists[i];
+         stickyTitle.innerHTML = lists[i].name;
 
          newSticky.appendChild(stickyTitle);
          choresDiv.appendChild(newSticky);
@@ -55,17 +56,26 @@ function create_list(){
             //Remove modal from the screen; create the sticky note
             $("#addListModal").modal('toggle');
 
-            let lists = [title];
+            let lists = [];
+            let newList = {};
+            newList['name'] = title;
+            lists.push(newList);
             generate_sticky(lists);
         }
     });
 }
 
 /*
-    Used when the user navigates to the chores pane. Retrieves all of their to-do lists, then calls on create_list() to diplay lists
+    Used when the user navigates to the chores pane. Retrieves all of their to-do lists, then calls on generate_sticky() to diplay lists
 */
 function retrieve_lists(){
-
+    fetch("/getLists", {
+        method: "GET"
+    })
+    .then(response => response.json())
+    .then(lists => {
+        generate_sticky(lists);
+    });
 }
 
 function retrieve_messages(scroll){
@@ -284,6 +294,8 @@ function load_view(view){
 
         choresDiv.appendChild(addListButton);
         choresDiv.appendChild(addListModal);
+
+        retrieve_lists();
 
     } else if (view === 'chat'){
         //Select the chat container, set its display, and erase any previous content

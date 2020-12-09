@@ -63,6 +63,14 @@ def createList(request):
         newList.save()
         return JsonResponse({"success": "The list was created succesfully"}, status = 201)
 
+def retrieveLists(request):
+    if request.method == "GET":
+
+        #Retrieve the users' lists
+        lists = TodoList.objects.filter(owner = request.user.id)
+
+        return JsonResponse([list.serialize() for list in lists], safe=False)
+
 @csrf_exempt
 def sendMessage(request):
     if request.method == "POST":
