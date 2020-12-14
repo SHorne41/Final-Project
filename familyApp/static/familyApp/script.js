@@ -216,6 +216,13 @@ function load_view(view){
 
         //Create the Menu bar for the chores pane
         let choresMenu = document.createElement('div');
+        choresMenu.id = "choresMenu";
+
+        let menuTitle = document.createElement('h1');
+        menuTitle.innerHTML = "To Do Lists";
+        menuTitle.id = "menuTitle";
+
+        choresMenu.appendChild(menuTitle);
 
         /*
         Create the modal for adding lists
@@ -294,8 +301,9 @@ function load_view(view){
 
         //Create the "Add list" button
         let addListButton = document.createElement('button');
-        addListButton.innerHTML = "+";
-        addListButton.classList.add("btn", "btn-link");
+        addListButton.innerHTML = "Add New List";
+        addListButton.classList.add("btn");
+        addListButton.id = "addListButton";
         addListButton.setAttribute("data-toggle", "modal");
         addListButton.setAttribute("data-target", "#addListModal");
 

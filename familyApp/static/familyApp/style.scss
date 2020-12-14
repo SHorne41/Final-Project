@@ -86,16 +86,20 @@ $stickyColor: #FFFF88;
     grid-gap: 3px;
 }
 
-#menuContainer{
+#choresMenu{
     border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    position: relative;
 }
 
-#menuContent{
-    display: inline;
-}
-
-#choresTitle{
+#menuTitle{
     text-align: center;
+}
+
+#addListButton{
+    position: absolute;
+    right: 0;
 }
 
 .stickyNotes{
