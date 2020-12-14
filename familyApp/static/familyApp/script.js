@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function generate_sticky(lists){
     //Create the sticky notes; append to the choresDiv
-    let choresDiv = document.querySelector("[data-content='chores']");
+    let listContainer = document.querySelector("#listContainer");
 
     console.log(lists);
 
@@ -26,7 +26,7 @@ function generate_sticky(lists){
          stickyTitle.innerHTML = lists[i].name;
 
          newSticky.appendChild(stickyTitle);
-         choresDiv.appendChild(newSticky);
+         listContainer.appendChild(newSticky);
     }
 }
 
@@ -202,12 +202,20 @@ function load_view(view){
     } else if (view === 'chores'){
         //Select the chores container, set its display, and erase any previous content
         let choresDiv = document.querySelector("[data-content='chores']")
-        choresDiv.style.display = 'grid';
+        choresDiv.style.display = 'block';
         choresDiv.innerHTML = '';
 
         /*
         Create any and all elements to be displayed and append them to the container
         */
+
+        //Create the containers for the choresDiv
+        let listContainer = document.createElement('div');
+        listContainer.style.display = 'grid';
+        listContainer.id = "listContainer";
+
+        //Create the Menu bar for the chores pane
+        let choresMenu = document.createElement('div');
 
         /*
         Create the modal for adding lists
@@ -274,7 +282,6 @@ function load_view(view){
         listForm.appendChild(createListButton);
         modalBody.appendChild(listForm);
 
-
         addListModalHeader.appendChild(modalTitle);
         modalClose.appendChild(modalCloseSpan);
         addListModalHeader.appendChild(modalClose);
@@ -292,8 +299,11 @@ function load_view(view){
         addListButton.setAttribute("data-toggle", "modal");
         addListButton.setAttribute("data-target", "#addListModal");
 
-        choresDiv.appendChild(addListButton);
-        choresDiv.appendChild(addListModal);
+        choresMenu.appendChild(addListButton);
+        choresMenu.appendChild(addListModal);
+
+        choresDiv.appendChild(choresMenu);
+        choresDiv.appendChild(listContainer);
 
         retrieve_lists();
 

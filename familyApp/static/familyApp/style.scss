@@ -48,8 +48,11 @@ $stickyColor: #FFFF88;
 /*------------------------Chores page-------------------------*/
 #choresDiv{
     overflow-y: scroll;
+}
+
+#listContainer{
     grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 5px;
+    grid-gap: 3px;
 }
 
 #menuContainer{
@@ -70,6 +73,7 @@ $stickyColor: #FFFF88;
     width: 250px;
     height: 250px;
     border: 1px solid black;
+    margin-top: 3px;
 }
 
 .stickyNotes h3{
