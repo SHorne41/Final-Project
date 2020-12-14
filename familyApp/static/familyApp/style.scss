@@ -4,6 +4,25 @@ $panel-color: #59018c;
 $textArea-color: #934bb3;
 $stickyColor: #FFFF88;
 
+/*-----------------------Inheritance-----------------------------*/
+%scrollbars{
+    width: 12px;
+}
+
+%scrollbarTracks{
+    background: $panel-color;
+    border-radius: 5px;
+    border: 2px solid black;
+}
+
+%scrollbarThumbs{
+    background: $body-color;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+/*-------------------------Template--------------------------------*/
+
 .page-content{
     background-color: $body-color;
 }
@@ -50,6 +69,18 @@ $stickyColor: #FFFF88;
     overflow-y: scroll;
 }
 
+#choresDiv::-webkit-scrollbar{
+    @extend %scrollbars;
+}
+
+#choresDiv::-webkit-scrollbar-track{
+    @extend %scrollbarTracks;
+}
+
+#choresDiv::-webkit-scrollbar-thumb{
+    @extend %scrollbarThumbs;
+}
+
 #listContainer{
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 3px;
@@ -93,19 +124,15 @@ $stickyColor: #FFFF88;
 }
 
 #allMessages::-webkit-scrollbar{
-    width: 12px;
+    @extend %scrollbars
 }
 
 #allMessages::-webkit-scrollbar-track{
-    background: $panel-color;
-    border-radius: 5px;
-    border: 2px solid black;
+    @extend %scrollbarTracks
 }
 
 #allMessages::-webkit-scrollbar-thumb{
-    background: $body-color;
-    border-radius: 5px;
-    border: 1px solid black;
+    @extend %scrollbarThumbs
 }
 
 #messageContainer{
