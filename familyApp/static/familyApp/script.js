@@ -202,7 +202,7 @@ function load_view(view){
     } else if (view === 'chores'){
         //Select the chores container, set its display, and erase any previous content
         let choresDiv = document.querySelector("[data-content='chores']")
-        choresDiv.style.display = 'block';
+        choresDiv.style.display = 'grid';
         choresDiv.innerHTML = '';
 
         /*
