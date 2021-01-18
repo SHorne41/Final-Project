@@ -12,45 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-function generate_sticky(lists){
-    //Create the sticky notes; append to the choresDiv
-    let listContainer = document.querySelector("#listContainer");
-
-    for (i = 0; i < lists.length; i ++){
-
-        //Create items that make up sticky note
-         let newSticky = document.createElement("div");
-         let stickyHeader = document.createElement("div");
-         let stickyTitle = document.createElement("h3");
-         let stickyContent = document.createElement("div");
-         let stickyList = document.createElement("ul");
-
-         //Add properties to newly created items
-         newSticky.classList.add("stickyNotes");
-         stickyHeader.classList.add("stickyHeader");
-         stickyTitle.innerHTML = lists[i].name;
-
-
-
-         //Append title/add item buttons to header
-         stickyHeader.appendChild(stickyTitle);
-
-         //Append list (even if empty) to stickyContent
-         stickyContent.appendChild(stickyList);
-
-         //Append header/content to sticky note
-         newSticky.appendChild(stickyHeader);
-         newSticky.appendChild(stickyContent);
-
-         //Append sticky note to the Notes container
-         listContainer.appendChild(newSticky);
-    }
-}
-
 //When the user creates a new list in the chores pane; create a TodoList instance on the server
 function create_list(){
     //Retrieve list title from the modal, send to server to create new list object
-    let title = document.getElementById("newListForm").elements["newListTitle"].value;
+    let title = document.getElementById("newListForm").elements["Title"].value;
 
     //Make API call to attempt to create list
     fetch("/createList", {
@@ -80,6 +45,123 @@ function create_list(){
             generate_sticky(lists);
         }
     });
+}
+
+function createModal (modalName, formName, formFunction){
+
+	//Use argument to create names
+	let modalLabelName = modalName + "Label";
+	let formReturnFunction = "return " + formFunction;
+
+	//Containing div
+	let modal = document.createElement('div');
+	modal.classList.add("modal", "fade");
+	modal.id = modalName;
+	modal.setAttribute("tableindex", "-1");
+	modal.setAttribute("role", "dialog");
+	modal.setAttribute("aria-labelledby", modalLabelName);
+	modal.setAttribute("aria-hidden", "true");
+
+	//Inner Div (dialog)
+	let modalDialog = document.createElement('div');
+	modalDialog.classList.add("modal-dialog");
+	modalDialog.setAttribute("role", "document");
+
+	//Inner Div (content)
+	let modalContent = document.createElement('div');
+	modalContent.classList.add("modal-content");
+
+	//Inner-most div (header)
+	let modalHeader = document.createElement('div');
+	modalHeader.classList.add("modal-header");
+
+	//Header content
+	let modalTitle = document.createElement("h5");
+	modalTitle.classList.add("modal-title");
+	modalTitle.id = modalLabelName;
+	modalTitle.innerHTML = "Create a New List";
+	//Header close button
+	let modalClose = document.createElement("button");
+	modalClose.classList.add("close");
+	modalClose.setAttribute("data-dismiss", "modal");
+	modalClose.setAttribute("aria-label", "Close");
+	//Header span
+	let modalCloseSpan = document.createElement("span");
+	modalCloseSpan.setAttribute("aria-hidden", "true");
+	modalCloseSpan.innerHTML = "&times;";
+
+	//Body content
+	let modalBody = document.createElement("div");
+
+	let newForm = document.createElement("form");
+	newForm.id = formName;
+	newForm.setAttribute("onsubmit", formReturnFunction);
+	//function to stop page from reloading when the form is submitted
+	function handleForm(event) {event.preventDefault();}
+	newForm.addEventListener('submit', handleForm);
+
+	let title = document.createElement("input");
+	title.setAttribute("type", "text");
+	title.required = true;
+	title.placeholder = "Insert Title Here...";
+	title.name = "Title";
+
+	let createButton = document.createElement("button");
+	createButton.setAttribute("type", "submit");
+	createButton.setAttribute("form", formName);
+	createButton.classList.add("btn", "btn-primary");
+	createButton.innerHTML = "Create";
+
+	//Append all elements to their appropriate containers
+    newForm.appendChild(title);
+    newForm.appendChild(createButton);
+    modalBody.appendChild(newForm);
+
+    modalHeader.appendChild(modalTitle);
+    modalClose.appendChild(modalCloseSpan);
+    modalHeader.appendChild(modalClose);
+
+    modalContent.appendChild(modalHeader);
+    modalContent.appendChild(modalBody);
+
+    modalDialog.appendChild(modalContent);
+    modal.appendChild(modalDialog);
+
+    return modal;
+
+}
+
+function generate_sticky(lists){
+    //Create the sticky notes; append to the choresDiv
+    let listContainer = document.querySelector("#listContainer");
+
+    for (i = 0; i < lists.length; i ++){
+
+        //Create items that make up sticky note
+         let newSticky = document.createElement("div");
+         let stickyHeader = document.createElement("div");
+         let stickyTitle = document.createElement("h3");
+         let stickyContent = document.createElement("div");
+         let stickyList = document.createElement("ul");
+
+         //Add properties to newly created items
+         newSticky.classList.add("stickyNotes");
+         stickyHeader.classList.add("stickyHeader");
+         stickyTitle.innerHTML = lists[i].name;
+
+         //Append title/add item buttons to header
+         stickyHeader.appendChild(stickyTitle);
+
+         //Append list (even if empty) to stickyContent
+         stickyContent.appendChild(stickyList);
+
+         //Append header/content to sticky note
+         newSticky.appendChild(stickyHeader);
+         newSticky.appendChild(stickyContent);
+
+         //Append sticky note to the Notes container
+         listContainer.appendChild(newSticky);
+    }
 }
 
 /*
@@ -241,80 +323,7 @@ function load_view(view){
 
         choresMenu.appendChild(menuTitle);
 
-        /*
-        Create the modal for adding lists
-        */
-        //Containing div
-        let addListModal = document.createElement('div');
-        addListModal.classList.add("modal", "fade");
-        addListModal.id = "addListModal";
-        addListModal.setAttribute("tableindex", "-1");
-        addListModal.setAttribute("role", "dialog");
-        addListModal.setAttribute("aria-labelledby", "addListModalLabel");
-        addListModal.setAttribute("aria-hidden", "true");
-
-        //Inner Div (dialog)
-        let addListModalDialog = document.createElement('div');
-        addListModalDialog.classList.add("modal-dialog");
-        addListModalDialog.setAttribute("role", "document");
-
-        //Inner Div (content)
-        let addListModalContent = document.createElement('div');
-        addListModalContent.classList.add("modal-content");
-
-        //Inner-most div (header)
-        let addListModalHeader = document.createElement('div');
-        addListModalHeader.classList.add("modal-header");
-
-        //Header content
-        let modalTitle = document.createElement("h5");
-        modalTitle.classList.add("modal-title");
-        modalTitle.id = "addListModalLabel";
-        modalTitle.innerHTML = "Create a New List";
-        //Header close button
-        let modalClose = document.createElement("button");
-        modalClose.classList.add("close");
-        modalClose.setAttribute("data-dismiss", "modal");
-        modalClose.setAttribute("aria-label", "Close");
-        //Header span
-        let modalCloseSpan = document.createElement("span");
-        modalCloseSpan.setAttribute("aria-hidden", "true");
-        modalCloseSpan.innerHTML = "&times;";
-
-        //Body content
-        let modalBody = document.createElement("div");
-        let listForm = document.createElement("form");
-        listForm.id = "newListForm";
-        listForm.setAttribute("onsubmit", "return create_list()");
-        //function to stop page from reloading when the form is submitted
-        function handleForm(event) {event.preventDefault();}
-        listForm.addEventListener('submit', handleForm);
-        let listTitle = document.createElement("input");
-        listTitle.setAttribute("type", "text");
-        listTitle.required = true;
-        listTitle.placeholder = "Insert Title Here...";
-        listTitle.name = "newListTitle";
-
-        let createListButton = document.createElement("button");
-        createListButton.setAttribute("type", "submit");
-        createListButton.setAttribute("form", "newListForm");
-        createListButton.classList.add("btn", "btn-primary");
-        createListButton.innerHTML = "Create List";
-
-        //Append all elements to their appropriate containers
-        listForm.appendChild(listTitle);
-        listForm.appendChild(createListButton);
-        modalBody.appendChild(listForm);
-
-        addListModalHeader.appendChild(modalTitle);
-        modalClose.appendChild(modalCloseSpan);
-        addListModalHeader.appendChild(modalClose);
-
-        addListModalContent.appendChild(addListModalHeader);
-        addListModalContent.appendChild(modalBody);
-
-        addListModalDialog.appendChild(addListModalContent);
-        addListModal.appendChild(addListModalDialog);
+        let addListModal = createModal("addListModal", "newListForm", "create_list()");
 
         //Create the "Add list" button
         let addListButton = document.createElement('button');
