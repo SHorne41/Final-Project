@@ -92,6 +92,10 @@
   margin-top: 3px;
 }
 
+.stickyHeader {
+  border-bottom: 1px solid black;
+}
+
 .stickyNotes h3 {
   text-align: center;
 }

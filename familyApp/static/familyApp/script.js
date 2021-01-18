@@ -16,16 +16,33 @@ function generate_sticky(lists){
     //Create the sticky notes; append to the choresDiv
     let listContainer = document.querySelector("#listContainer");
 
-    console.log(lists);
-
     for (i = 0; i < lists.length; i ++){
 
+        //Create items that make up sticky note
          let newSticky = document.createElement("div");
-         newSticky.classList.add("stickyNotes");
+         let stickyHeader = document.createElement("div");
          let stickyTitle = document.createElement("h3");
+         let stickyContent = document.createElement("div");
+         let stickyList = document.createElement("ul");
+
+         //Add properties to newly created items
+         newSticky.classList.add("stickyNotes");
+         stickyHeader.classList.add("stickyHeader");
          stickyTitle.innerHTML = lists[i].name;
 
-         newSticky.appendChild(stickyTitle);
+
+
+         //Append title/add item buttons to header
+         stickyHeader.appendChild(stickyTitle);
+
+         //Append list (even if empty) to stickyContent
+         stickyContent.appendChild(stickyList);
+
+         //Append header/content to sticky note
+         newSticky.appendChild(stickyHeader);
+         newSticky.appendChild(stickyContent);
+
+         //Append sticky note to the Notes container
          listContainer.appendChild(newSticky);
     }
 }
