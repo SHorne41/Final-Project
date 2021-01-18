@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from .forms import CustomUserCreationForm
 from django.views.decorators.csrf import csrf_exempt
-from .models import Message, CustomUser, TodoList
+from .models import Message, CustomUser, TodoList, TodoEvent
 from datetime import datetime
 from django.http import JsonResponse
 from django.core import serializers
@@ -70,6 +70,19 @@ def retrieveLists(request):
         lists = TodoList.objects.filter(owner = request.user.id)
 
         return JsonResponse([list.serialize() for list in lists], safe=False)
+
+@csrf_exempt
+def createListItem(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        print(data.get("name"))
+
+        #Retrieve the list we're looking to add an item to
+        list = TodoList.objects.get(owner = request.user.id, name = data.get("listName"))
+        print(list)
+
+        return JsonResponse({"success": "The list was created succesfully"}, status = 201)
+
 
 @csrf_exempt
 def sendMessage(request):

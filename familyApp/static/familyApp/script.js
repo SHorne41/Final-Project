@@ -48,9 +48,37 @@ function create_list(){
 }
 
 //When the user creates a new chore on one of their lists, create an instance of the chore on the server
-function create_item(){
+function create_item(listName){
     //Retrieve list title from the modal, send to server to create new list object
     let title = document.getElementById("newItemForm").elements["Title"].value;
+
+    console.log("attempting to create an item");
+
+    fetch("/createListItem", {
+        method: "POST",
+        body: JSON.stringify({
+            name: title,
+            listName: listName,
+        })
+    })
+    .then(response => response.json().then(data => ({status: response.status, body: data})))
+    .then(result =>{
+        //If there was already an item on the list with the name supplied in this request, generate error
+        if (result["status"] == 409){
+            alert("An item on this list with that title has already been created. Please select a new title and try again");
+            //Remove modal from the screen; quit the function
+            $("#addItemModal").modal('toggle');
+            return;
+        }
+        //If the server created the item, however, update the <ul> of the list to include the new list item
+        else if (result["status"] == 201){
+            //Remove modal from the screen; create the sticky note
+            $("#addItemModal").modal('toggle');
+
+            alert("Item created successfully!!!");
+
+        }
+    });
 }
 
 function createModal (modalName, formName, formFunction){
@@ -102,6 +130,7 @@ function createModal (modalName, formName, formFunction){
 	let newForm = document.createElement("form");
 	newForm.id = formName;
 	newForm.setAttribute("onsubmit", formReturnFunction);
+
 	//function to stop page from reloading when the form is submitted
 	function handleForm(event) {event.preventDefault();}
 	newForm.addEventListener('submit', handleForm);
@@ -151,11 +180,14 @@ function generate_sticky(lists){
          let stickyList = document.createElement("ul");
          let addItemButton = document.createElement("button");
 
+         let func = "create_item('" + lists[i].name + "')";
+
          //Create modal to be used to add item to the list
-         let addItemModal = createModal("addItemModal", "newItemForm", "create_item()");
+         let addItemModal = createModal("addItemModal", "newItemForm", func);
 
          //Add properties to newly created items
          newSticky.classList.add("stickyNotes");
+         newSticky.id = lists[i].name;
          stickyHeader.classList.add("stickyHeader");
          stickyTitle.innerHTML = lists[i].name;
 

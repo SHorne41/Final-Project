@@ -9,5 +9,6 @@ urlpatterns = [
     path("send", views.sendMessage, name="send"),
     path("getMessages", views.retrieveMessages, name="retrieve"),
     path("createList", views.createList, name="create"),
-    path("getLists", views.retrieveLists, name="reLists")
+    path("getLists", views.retrieveLists, name="reLists"),
+    path("createListItem", views.createListItem, name="createItem")
 ]
