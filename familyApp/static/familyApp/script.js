@@ -47,6 +47,12 @@ function create_list(){
     });
 }
 
+//When the user creates a new chore on one of their lists, create an instance of the chore on the server
+function create_item(){
+    //Retrieve list title from the modal, send to server to create new list object
+    let title = document.getElementById("newItemForm").elements["Title"].value;
+}
+
 function createModal (modalName, formName, formFunction){
 
 	//Use argument to create names
@@ -143,14 +149,26 @@ function generate_sticky(lists){
          let stickyTitle = document.createElement("h3");
          let stickyContent = document.createElement("div");
          let stickyList = document.createElement("ul");
+         let addItemButton = document.createElement("button");
+
+         //Create modal to be used to add item to the list
+         let addItemModal = createModal("addItemModal", "newItemForm", "create_item()");
 
          //Add properties to newly created items
          newSticky.classList.add("stickyNotes");
          stickyHeader.classList.add("stickyHeader");
          stickyTitle.innerHTML = lists[i].name;
 
+         addItemButton.innerHTML = "+";
+         addItemButton.classList.add("btn");
+         addItemButton.classList.add ("modalAddButton");
+         addItemButton.setAttribute("data-toggle", "modal");
+         addItemButton.setAttribute("data-target", "#addItemModal");
+
          //Append title/add item buttons to header
          stickyHeader.appendChild(stickyTitle);
+         stickyHeader.appendChild(addItemButton);
+         stickyHeader.appendChild(addItemModal);
 
          //Append list (even if empty) to stickyContent
          stickyContent.appendChild(stickyList);
@@ -329,7 +347,7 @@ function load_view(view){
         let addListButton = document.createElement('button');
         addListButton.innerHTML = "Add New List";
         addListButton.classList.add("btn");
-        addListButton.id = "addListButton";
+        addListButton.classList.add("modalAddButton");
         addListButton.setAttribute("data-toggle", "modal");
         addListButton.setAttribute("data-target", "#addListModal");
 

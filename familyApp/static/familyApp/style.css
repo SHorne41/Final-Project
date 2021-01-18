@@ -78,7 +78,7 @@
   text-align: center;
 }
 
-#addListButton {
+.modalAddButton {
   position: absolute;
   right: 0;
 }
@@ -94,6 +94,9 @@
 
 .stickyHeader {
   border-bottom: 1px solid black;
+  display: flex;
+  justify-content: center;
+  position: relative;
 }
 
 .stickyNotes h3 {

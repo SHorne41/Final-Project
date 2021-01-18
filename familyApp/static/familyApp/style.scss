@@ -97,7 +97,7 @@ $stickyColor: #FFFF88;
     text-align: center;
 }
 
-#addListButton{
+.modalAddButton{
     position: absolute;
     right: 0;
 }
@@ -113,6 +113,9 @@ $stickyColor: #FFFF88;
 
 .stickyHeader{
     border-bottom: 1px solid black;
+    display: flex;
+    justify-content: center;
+    position: relative;
 }
 
 .stickyNotes h3{
